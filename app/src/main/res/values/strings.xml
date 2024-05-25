@@ -3,4 +3,6 @@
     <string name="title_home">Beranda</string>
     <string name="title_scan">Analisis</string>
     <string name="title_profile">Profil</string>
+    <string name="team_id">C241-PS039</string>
+    <string name="created_by">dibuat oleh</string>
 </resources>
