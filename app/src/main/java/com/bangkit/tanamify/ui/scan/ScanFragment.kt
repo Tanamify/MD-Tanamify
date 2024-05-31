@@ -13,8 +13,6 @@ class ScanFragment : Fragment() {
 
     private var _binding: FragmentScanBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,7 +26,7 @@ class ScanFragment : Fragment() {
         _binding = FragmentScanBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
+        val textView: TextView = binding.tvTakePicture
         scanViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
