@@ -5,4 +5,13 @@
     <string name="title_profile">Profil</string>
     <string name="team_id">C241-PS039</string>
     <string name="created_by">dibuat oleh</string>
+    <string name="image_classifier_failed">Image classifier failed to initialize. See error logs for details</string>
+    <string name="login_greeting">Masuk pakai akun kamu ya!</string>
+    <string name="name">Nama</string>
+    <string name="hint_name">Masukkan Nama</string>
+    <string name="password">Password</string>
+    <string name="hint_password">Masukkan Password</string>
+    <string name="login">Masuk</string>
+    <string name="or_register">Belum memiliki akun?</string>
+    <string name="register">Daftar</string>
 </resources>
