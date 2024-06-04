@@ -1,13 +1,33 @@
 package com.bangkit.tanamify.ui.home
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.bangkit.tanamify.data.local.HistoryEntity
+import com.bangkit.tanamify.repository.HistoryRepository
+import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : ViewModel() {
+    private val historyRepository = HistoryRepository(application)
+    private val _historyList: MutableLiveData<List<HistoryEntity>> = MutableLiveData()
+    val historyList: LiveData<List<HistoryEntity>> = _historyList
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Ini adalah fragment beranda"
+    init {
+        loadHistory()
     }
-    val text: LiveData<String> = _text
+
+    fun addHistory(historyEntity: HistoryEntity) {
+        viewModelScope.launch {
+            historyRepository.addHistory(historyEntity)
+            loadHistory()
+        }
+    }
+
+    private fun loadHistory() {
+        viewModelScope.launch {
+            _historyList.value = historyRepository.getHistory()
+        }
+    }
 }
