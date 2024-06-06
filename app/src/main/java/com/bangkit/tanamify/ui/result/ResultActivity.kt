@@ -5,8 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.bangkit.tanamify.MainActivity
 import com.bangkit.tanamify.databinding.ActivityResultBinding
 
 class ResultActivity : AppCompatActivity() {
@@ -31,27 +31,23 @@ class ResultActivity : AppCompatActivity() {
             Log.d("Result", "showResult: $it")
             binding.tvResultText.text = it
         }
+
+        // Set click listener for btn_okay
+        binding.btnOkay.setOnClickListener {
+            navigateToMainActivity()
+        }
     }
 
     private fun setupActionBar() {
         supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-            title = "Result"
+            title = "Hasil Analisis"
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                val resultIntent = Intent()
-                resultIntent.putExtra(EXTRA_RESULT, "Updated result")
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     companion object {

@@ -1,11 +1,13 @@
 package com.bangkit.tanamify.ui.scan
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,14 +24,18 @@ import com.bangkit.tanamify.R
 import com.bangkit.tanamify.data.local.HistoryEntity
 import com.bangkit.tanamify.databinding.FragmentScanBinding
 import com.bangkit.tanamify.helper.ImageClassifierHelper
-import com.bangkit.tanamify.utils.ViewModelFactory
-import com.bangkit.tanamify.utils.convertMillisToDateString
 import com.bangkit.tanamify.ui.home.HomeViewModel
 import com.bangkit.tanamify.ui.result.ResultActivity
+import com.bangkit.tanamify.utils.ViewModelFactory
+import com.bangkit.tanamify.utils.convertMillisToDateString
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.task.vision.classifier.Classifications
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ScanFragment : Fragment() {
     private var _binding: FragmentScanBinding? = null
@@ -38,6 +45,8 @@ class ScanFragment : Fragment() {
     }
 
     private var currentImageUri: Uri? = null
+    private var photoURI: Uri? = null
+    private lateinit var currentPhotoPath: String
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -54,7 +63,11 @@ class ScanFragment : Fragment() {
         ContextCompat.checkSelfPermission(
             requireContext(),
             REQUIRED_PERMISSION
-        ) == PackageManager.PERMISSION_GRANTED
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,6 +93,9 @@ class ScanFragment : Fragment() {
             btnGallery.setOnClickListener {
                 startGallery()
             }
+            btnCamera.setOnClickListener {
+                startCamera()
+            }
         }
     }
 
@@ -100,16 +116,64 @@ class ScanFragment : Fragment() {
         }
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun startCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            val photoFile: File? = try {
+                createImageFile()
+            } catch (ex: IOException) {
+                showToast("Error occurred while creating the file")
+                null
+            }
+            photoFile?.also {
+                photoURI = FileProvider.getUriForFile(
+                    requireContext(),
+                    "com.bangkit.tanamify.fileprovider",
+                    it
+                )
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File = requireContext().getExternalFilesDir(null)!!
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentPhotoPath = absolutePath
+        }
+    }
+
     @Deprecated("Deprecated in Java", ReplaceWith(
         "super.onActivityResult(requestCode, resultCode, data)",
         "androidx.fragment.app.Fragment"
     ))
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-            val resultUri = UCrop.getOutput(data!!)
-            currentImageUri = resultUri
-            showImage()
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                UCrop.REQUEST_CROP -> {
+                    val resultUri = UCrop.getOutput(data!!)
+                    currentImageUri = resultUri
+                    showImage()
+                }
+                REQUEST_IMAGE_CAPTURE -> {
+                    currentImageUri = photoURI
+                    currentImageUri?.let {
+                        UCrop.of(it, Uri.fromFile(File(currentPhotoPath)))
+                            .withAspectRatio(1F, 1F)
+                            .withMaxResultSize(2000, 2000)
+                            .start(requireContext(), this)
+                    }
+                }
+            }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
             Log.e("Crop Error", "onActivityResult: $cropError")
@@ -129,7 +193,6 @@ class ScanFragment : Fragment() {
     }
 
     private fun analyzeImage(image: Uri) {
-
         val imageHelper = ImageClassifierHelper(
             context = requireContext(),
             classifierListener = object : ImageClassifierHelper.ClassifierListener {
@@ -158,7 +221,6 @@ class ScanFragment : Fragment() {
                 }
             }
         )
-
         imageHelper.classifyStaticImage(image)
     }
 
@@ -180,5 +242,6 @@ class ScanFragment : Fragment() {
 
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
+        private const val REQUEST_IMAGE_CAPTURE = 1
     }
 }
