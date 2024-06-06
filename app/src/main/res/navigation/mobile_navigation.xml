@@ -7,18 +7,18 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.bangkit.tanamify.ui.home.HomeFragment"
-        android:label="Home"
+        android:label="Tanamify"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_scan"
         android:name="com.bangkit.tanamify.ui.scan.ScanFragment"
-        android:label="Scan"
+        android:label="Analisis"
         tools:layout="@layout/fragment_scan" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.bangkit.tanamify.ui.profile.ProfileFragment"
-        android:label="Profile"
+        android:label="Profil"
         tools:layout="@layout/fragment_profile" />
 </navigation>

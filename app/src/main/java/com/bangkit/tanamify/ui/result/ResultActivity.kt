@@ -32,7 +32,6 @@ class ResultActivity : AppCompatActivity() {
             binding.tvResultText.text = it
         }
 
-        // Set click listener for btn_okay
         binding.btnOkay.setOnClickListener {
             navigateToMainActivity()
         }
