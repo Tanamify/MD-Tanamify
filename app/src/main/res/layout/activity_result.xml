@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.result.ResultFragment">
+    android:background="@color/white"
+    tools:context=".ui.result.ResultActivity">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/resultImage"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/ic_gallery_foreground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="340dp"
+        android:layout_margin="24dp"
+        app:shapeAppearanceOverlay="@style/RoundedCornerImageView"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_gallery_foreground"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/tv_resultText"
@@ -22,6 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:text="Hasil Analisis"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resultImage" />
 

@@ -10,4 +10,14 @@
         <item name="android:statusBarColor">@color/green_primary</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="RoundedCornerImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="RoundedCornerImageViewSmall" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>

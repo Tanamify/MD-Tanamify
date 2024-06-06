@@ -1,6 +1,5 @@
 package com.bangkit.tanamify.ui.home
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.tanamify.R
 import com.bangkit.tanamify.data.local.HistoryEntity
 import com.bangkit.tanamify.databinding.FragmentHomeBinding
 import com.bangkit.tanamify.utils.HistoryAdapter
@@ -33,13 +31,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        activity?.actionBar?.apply {
-            setCustomView(R.layout.app_bar)
-            setDisplayShowCustomEnabled(true)
-            setDisplayShowTitleEnabled(false)
-            setBackgroundDrawable(ColorDrawable(requireContext().getColor(R.color.green_primary)))
-        }
 
         val layoutManager = LinearLayoutManager(requireContext())
         binding.historyList.layoutManager = layoutManager

@@ -15,4 +15,14 @@
     <style name="ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/green_primary</item>
     </style>
+
+    <style name="RoundedCornerImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="RoundedCornerImageViewSmall" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>

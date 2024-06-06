@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/ml/image_processing_tanah_2_with_metadata.tflite

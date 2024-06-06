@@ -1,6 +1,7 @@
 package com.bangkit.tanamify.utils
 
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -25,6 +26,8 @@ class HistoryAdapter: ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DI
 
     class MyViewHolder(private val binding: HistoryCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(history: HistoryEntity){
+            val imageUri = Uri.parse(history.uri)
+            binding.resultImage.setImageURI(imageUri)
             binding.textViewLabel.text = history.result
             binding.textViewTime.text = history.date
 

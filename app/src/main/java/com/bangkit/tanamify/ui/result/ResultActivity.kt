@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bangkit.tanamify.databinding.ActivityResultBinding
-import com.bangkit.tanamify.MainActivity
 
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding
