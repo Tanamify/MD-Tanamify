@@ -7,13 +7,54 @@
     android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/ivHero"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"
-        android:background="@color/green_primary"
-        android:src="@drawable/bg_hero"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#295C28"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_loc_foreground"
+            android:text="Menteng, Jakarta Pusat, Jakarta"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/rubik"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="36°C"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:fontFamily="@font/rubik_bold"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tv_greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hai Fulan!"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:fontFamily="@font/rubik_bold"
+            android:layout_marginTop="28dp" />
+
+        <TextView
+            android:id="@+id/tv_welcome_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selamat datang di Tanamify!"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:fontFamily="@font/rubik"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/historyTitle"
