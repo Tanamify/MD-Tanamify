@@ -108,7 +108,7 @@ class ScanFragment : Fragment() {
     ) { uri: Uri? ->
         if (uri != null) {
             UCrop.of(uri, Uri.fromFile(requireContext().cacheDir.resolve("${System.currentTimeMillis()}.jpg")))
-                .withAspectRatio(1F, 1F)
+                .withAspectRatio(16F, 9F)
                 .withMaxResultSize(2000, 2000)
                 .start(requireContext(), this)
         } else {
@@ -168,7 +168,7 @@ class ScanFragment : Fragment() {
                     currentImageUri = photoURI
                     currentImageUri?.let {
                         UCrop.of(it, Uri.fromFile(File(currentPhotoPath)))
-                            .withAspectRatio(1F, 1F)
+                            .withAspectRatio(16F, 9F)
                             .withMaxResultSize(2000, 2000)
                             .start(requireContext(), this)
                     }
