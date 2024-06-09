@@ -18,4 +18,8 @@
     <string name="label">Label</string>
     <string name="replace_image">Ganti gambar</string>
     <string name="our_team">M200D4KY1957 – Rizky Akhmad Fahreza \nM248D4KX2597 – Dina Merlia Efendi \nM308D4KX1815 – Nasywa Anindya Putri \nC200D4KY0347 – Derva Anargya Ghaly \nC200D4KY0885 – Erlan Irhab Ghalib \nA119D4KY4094 – Yondika Vio Landa \nA338D4KY4234 – Muhammad Iqbal Fadhillah</string>
+    <string name="register_greeting">Yuk Daftar Akun Dulu</string>
+    <string name="email">Email</string>
+    <string name="hint_email">Masukkan Email</string>
+    <string name="or_login">Sudah Mempunyai Akun</string>
 </resources>
