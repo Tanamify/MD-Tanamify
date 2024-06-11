@@ -23,7 +23,7 @@
             android:text="Menteng, Jakarta Pusat, Jakarta"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/rubik"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_temperature"

@@ -19,16 +19,105 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/tv_resultText"
+        android:id="@+id/tv_titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        android:text="Jenis Tanah :"
+        android:textColor="@color/green_primary"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resultImage" />
+
+    <TextView
+        android:id="@+id/tv_resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
         android:text="Hasil Analisis"
         android:textColor="@color/black"
         android:fontFamily="@font/rubik"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_titleText"
         app:layout_constraintTop_toBottomOf="@+id/resultImage" />
+
+    <TextView
+        android:id="@+id/tv_titleLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:text="Lokasi :"
+        android:textColor="@color/green_primary"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultText" />
+
+    <TextView
+        android:id="@+id/tv_resultLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Menteng, Jakarta Pusat"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_titleLoc"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultText" />
+
+    <TextView
+        android:id="@+id/tv_titleTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:text="Suhu :"
+        android:textColor="@color/green_primary"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultLoc" />
+
+    <TextView
+        android:id="@+id/tv_resultTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:text="36°C"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_titleTemp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultLoc" />
+
+    <TextView
+        android:id="@+id/tv_titleRecommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:text="Rekomendasi Tanaman :"
+        android:textColor="@color/green_primary"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultTemp" />
+
+    <TextView
+        android:id="@+id/tv_recommendation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Padi, Tebu, Jagung"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_titleRecommend" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_okay"
