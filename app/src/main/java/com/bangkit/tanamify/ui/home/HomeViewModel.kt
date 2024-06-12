@@ -1,16 +1,18 @@
 package com.bangkit.tanamify.ui.home
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bangkit.tanamify.data.local.HistoryEntity
 import com.bangkit.tanamify.repository.HistoryRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel(application: Application) : ViewModel() {
-    private val historyRepository = HistoryRepository(application)
+class HomeViewModel(
+    application: Application,
+    private val historyRepository: HistoryRepository
+) : AndroidViewModel(application) {
     private val _historyList: MutableLiveData<List<HistoryEntity>> = MutableLiveData()
     val historyList: LiveData<List<HistoryEntity>> = _historyList
 

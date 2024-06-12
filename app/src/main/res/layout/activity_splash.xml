@@ -23,7 +23,7 @@
         android:id="@+id/appNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tanamify"
+        android:text="@string/tanamify"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"

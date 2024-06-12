@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="340dp"
                 android:layout_margin="24dp"
-                app:shapeAppearanceOverlay="@style/RoundedCornerImageView"
                 android:background="@drawable/card_rounded"
+                app:shapeAppearanceOverlay="@style/RoundedCornerImageView"
                 app:srcCompat="@drawable/ic_gallery_foreground" />
 
             <TextView
@@ -31,9 +31,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:fontFamily="@font/rubik"
                 android:text="Ambil gambar dari"
                 android:textColor="@color/black"
-                android:fontFamily="@font/rubik"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />

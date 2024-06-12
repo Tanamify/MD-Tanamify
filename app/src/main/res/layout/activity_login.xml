@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
     <ImageView
         android:id="@+id/iv_login"
@@ -36,7 +36,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/rubik"
-        android:text="@string/name"
+        android:text="@string/email"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_login_greeting" />
@@ -49,7 +49,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/button_secondary"
         android:fontFamily="@font/rubik"
-        android:hint="@string/hint_name"
+        android:hint="@string/masukkan_email"
         android:paddingStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

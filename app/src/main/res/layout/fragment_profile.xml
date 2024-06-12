@@ -117,13 +117,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
+            android:fontFamily="@font/rubik"
             android:paddingBottom="100dp"
             android:text="@string/our_team"
+            android:textAlignment="center"
+            android:textColor="@color/dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:textColor="@color/dark_gray"
-            android:textAlignment="center"
-            android:fontFamily="@font/rubik"
             app:layout_constraintTop_toBottomOf="@id/logo_bangkit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
