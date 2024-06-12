@@ -44,56 +44,108 @@
         app:layout_constraintTop_toBottomOf="@+id/resultImage" />
 
     <TextView
-        android:id="@+id/tv_titleLoc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:text="Lokasi :"
-        android:textColor="@color/green_primary"
-        android:fontFamily="@font/rubik_bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resultText" />
-
-    <TextView
-        android:id="@+id/tv_resultLoc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Menteng, Jakarta Pusat"
-        android:textColor="@color/black"
-        android:fontFamily="@font/rubik"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/tv_titleLoc"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resultText" />
-
-    <TextView
         android:id="@+id/tv_titleTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginStart="24dp"
-        android:text="Suhu :"
+        android:text="Rata-rata temperatur :"
         android:textColor="@color/green_primary"
         android:fontFamily="@font/rubik_bold"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resultLoc" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultText" />
 
     <TextView
         android:id="@+id/tv_resultTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
         android:text="36°C"
         android:textColor="@color/black"
         android:fontFamily="@font/rubik"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/tv_titleTemp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resultLoc" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultText" />
+
+    <TextView
+        android:id="@+id/tv_titleHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="24dp"
+        android:text="Rata-rata kelembapan :"
+        android:textColor="@color/green_primary"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultTemp" />
+
+    <TextView
+        android:id="@+id/tv_resultHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:text="36°C"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_titleHumidity"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultTemp" />
+
+    <TextView
+        android:id="@+id/tv_titleRain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="24dp"
+        android:text="Rata-rata curah hujan/hari :"
+        android:textColor="@color/green_primary"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultHumidity" />
+
+    <TextView
+        android:id="@+id/tv_resultRain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:text="36°C"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_titleRain"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultHumidity" />
+
+    <TextView
+        android:id="@+id/tv_titleSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="24dp"
+        android:text="Lama penyinaran matahari :"
+        android:textColor="@color/green_primary"
+        android:fontFamily="@font/rubik_bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultRain" />
+
+    <TextView
+        android:id="@+id/tv_resultSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:text="36°C"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_titleSun"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultRain" />
 
     <TextView
         android:id="@+id/tv_titleRecommend"
@@ -105,7 +157,7 @@
         android:fontFamily="@font/rubik_bold"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resultTemp" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_resultSun" />
 
     <TextView
         android:id="@+id/tv_recommendation"
