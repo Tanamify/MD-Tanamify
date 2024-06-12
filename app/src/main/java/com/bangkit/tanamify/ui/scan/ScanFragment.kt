@@ -107,7 +107,10 @@ class ScanFragment : Fragment() {
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
-            UCrop.of(uri, Uri.fromFile(requireContext().cacheDir.resolve("${System.currentTimeMillis()}.jpg")))
+            UCrop.of(
+                uri,
+                Uri.fromFile(requireContext().cacheDir.resolve("${System.currentTimeMillis()}.jpg"))
+            )
                 .withAspectRatio(16F, 9F)
                 .withMaxResultSize(2000, 2000)
                 .start(requireContext(), this)
@@ -140,7 +143,8 @@ class ScanFragment : Fragment() {
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val timeStamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = requireContext().getExternalFilesDir(null)!!
         return File.createTempFile(
             "JPEG_${timeStamp}_",
@@ -151,10 +155,12 @@ class ScanFragment : Fragment() {
         }
     }
 
-    @Deprecated("Deprecated in Java", ReplaceWith(
-        "super.onActivityResult(requestCode, resultCode, data)",
-        "androidx.fragment.app.Fragment"
-    ))
+    @Deprecated(
+        "Deprecated in Java", ReplaceWith(
+            "super.onActivityResult(requestCode, resultCode, data)",
+            "androidx.fragment.app.Fragment"
+        )
+    )
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -164,6 +170,7 @@ class ScanFragment : Fragment() {
                     currentImageUri = resultUri
                     showImage()
                 }
+
                 REQUEST_IMAGE_CAPTURE -> {
                     currentImageUri = photoURI
                     currentImageUri?.let {

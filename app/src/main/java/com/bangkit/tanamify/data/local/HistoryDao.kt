@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface HistoryDao{
+interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addHistory(historyEntity: HistoryEntity)
 

@@ -12,7 +12,7 @@ import com.bangkit.tanamify.databinding.HistoryCardBinding
 import com.bangkit.tanamify.ui.result.ResultActivity
 
 
-class HistoryAdapter: ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = HistoryCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,8 +24,9 @@ class HistoryAdapter: ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DI
         holder.bind(history)
     }
 
-    class MyViewHolder(private val binding: HistoryCardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(history: HistoryEntity){
+    class MyViewHolder(private val binding: HistoryCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(history: HistoryEntity) {
             val imageUri = Uri.parse(history.uri)
             binding.resultImage.setImageURI(imageUri)
             binding.textViewLabel.text = history.result
@@ -45,7 +46,11 @@ class HistoryAdapter: ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DI
             override fun areItemsTheSame(oldItem: HistoryEntity, newItem: HistoryEntity): Boolean {
                 return oldItem == newItem
             }
-            override fun areContentsTheSame(oldItem: HistoryEntity, newItem: HistoryEntity): Boolean {
+
+            override fun areContentsTheSame(
+                oldItem: HistoryEntity,
+                newItem: HistoryEntity
+            ): Boolean {
                 return oldItem == newItem
             }
         }
