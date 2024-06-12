@@ -11,8 +11,8 @@
         android:id="@+id/ivHero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green_primary"
         android:orientation="vertical"
+        android:background="@color/green_primary"
         android:padding="24dp">
 
         <TextView
@@ -20,53 +20,53 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_loc_foreground"
-            android:fontFamily="@font/rubik"
             android:text="Menteng, Jakarta Pusat, Jakarta"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:fontFamily="@font/rubik"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/rubik_bold"
             android:text="36°C"
             android:textColor="#FFFFFF"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:fontFamily="@font/rubik_bold"
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/tv_greeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:fontFamily="@font/rubik_bold"
             android:text="Hai Fulan!"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:fontFamily="@font/rubik_bold"
+            android:layout_marginTop="28dp" />
 
         <TextView
             android:id="@+id/tv_welcome_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/rubik"
             android:text="Selamat datang di Tanamify!"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:fontFamily="@font/rubik"
+            android:layout_marginTop="4dp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/historyTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
-        android:fontFamily="@font/rubik_bold"
+        android:layout_marginHorizontal="24dp"
         android:text="@string/history"
-        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/rubik_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivHero" />
 
