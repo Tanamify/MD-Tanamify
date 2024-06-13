@@ -2,7 +2,6 @@ package com.bangkit.tanamify.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,9 +13,12 @@ import com.bangkit.tanamify.data.retrofit.response.LoginResponse
 import com.bangkit.tanamify.data.state.ResultState
 import com.bangkit.tanamify.databinding.ActivityLoginBinding
 import com.bangkit.tanamify.ui.register.RegisterActivity
+import com.bangkit.tanamify.utils.ToastUtils
 import com.bangkit.tanamify.utils.ViewModelFactory
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -27,12 +29,15 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val passwordInputLayout: TextInputLayout = binding.inputLayoutPassword
+        passwordInputLayout.isPasswordVisibilityToggleEnabled = true
+
 
         val viewModelFactory = ViewModelFactory.getInstance(this)
         loginViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
         binding.btnLogin.setOnClickListener {
-            val email = binding.tvInputName.text.toString()
+            val email = binding.tvInputEmail.text.toString()
             val password = binding.tvInputPassword.text.toString()
             lifecycleScope.launch {
                 loginViewModel.userLogin(email, password).collect { result ->
@@ -41,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnRegister.setOnClickListener{
+        binding.btnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
@@ -55,18 +60,19 @@ class LoginActivity : AppCompatActivity() {
                 val userRepository = Injection.provideRepository(applicationContext)
                 userRepository.updateApiService(ApiConfig.getApiService(token))
                 loginViewModel.saveSession(userModel)
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Login Berhasil")
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
 
             is ResultState.Error -> {
-                Toast.makeText(this, "Login Failed: ${result.error}", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Login Gagal: ${result.error}")
             }
 
             is ResultState.Loading -> {
             }
+
         }
     }
 }
