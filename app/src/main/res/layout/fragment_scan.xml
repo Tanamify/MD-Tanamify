@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
@@ -34,6 +35,7 @@
                 android:fontFamily="@font/rubik"
                 android:text="Ambil gambar dari"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -72,6 +74,51 @@
 
             </LinearLayout>
 
+            <!-- Input Fields for Environmental Variables -->
+            <EditText
+                android:id="@+id/temperatureInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Temperatur rata-rata (°C)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:background="@drawable/button_secondary" />
+
+            <EditText
+                android:id="@+id/humidityInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Kelembapan rata-rata (%)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:background="@drawable/button_secondary" />
+
+            <EditText
+                android:id="@+id/rainfallInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Curah hujan rata-rata per hari (mm)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:background="@drawable/button_secondary" />
+
+            <EditText
+                android:id="@+id/sunlightInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Lama penyinaran matahari per hari (jam)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:background="@drawable/button_secondary" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_analyze"
                 android:layout_width="match_parent"
@@ -83,6 +130,32 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
+
+            <!-- Recommendations Section -->
+            <LinearLayout
+                android:id="@+id/recommendationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:background="@color/gray">
+
+                <TextView
+                    android:id="@+id/tvRecommendationLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rekomendasi Tanaman:"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvRecommendationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
 
         </LinearLayout>
 
