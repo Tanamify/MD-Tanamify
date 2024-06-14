@@ -19,18 +19,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.bangkit.tanamify.R
-import com.bangkit.tanamify.data.local.HistoryEntity
 import com.bangkit.tanamify.databinding.FragmentScanBinding
 import com.bangkit.tanamify.helper.ImageClassifierHelper
 import com.bangkit.tanamify.ui.home.HomeViewModel
 import com.bangkit.tanamify.ui.result.ResultActivity
 import com.bangkit.tanamify.utils.ViewModelFactory
-import com.bangkit.tanamify.utils.convertMillisToDateString
 import com.yalantis.ucrop.UCrop
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.tensorflow.lite.task.vision.classifier.Classifications
 import java.io.File
 import java.io.IOException
@@ -208,35 +203,47 @@ class ScanFragment : Fragment() {
                 }
 
                 override fun onResults(results: List<Classifications>?) {
-                    val resultString = results?.joinToString("\n") {
-                        val threshold = (it.categories[0].score * 100).toInt()
-                        "${it.categories[0].label} : ${threshold}%"
-                    }
-                    if (resultString != null) {
-                        val data = HistoryEntity(
-                            date = convertMillisToDateString(System.currentTimeMillis()),
-                            uri = image.toString(),
-                            result = resultString
-                        )
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            requireActivity().runOnUiThread {
-                                viewModel.addHistory(data)
-                                moveToResult(image, resultString)
-                            }
-                        }
-                    }
+                    results?.let {
+                        val soilType = it[0].categories[0].label
+                        handleClassificationResults(soilType)
+                    } ?: showToast("No results from image classification")
                 }
             }
         )
         imageHelper.classifyStaticImage(image)
     }
 
-    private fun moveToResult(image: Uri, result: String) {
-        val intent = Intent(requireContext(), ResultActivity::class.java)
-        intent.putExtra(ResultActivity.EXTRA_IMAGE_URI, image.toString())
-        intent.putExtra(ResultActivity.EXTRA_RESULT, result)
+    private fun handleClassificationResults(soilType: String) {
+        val temperature = binding.temperatureInput.text.toString().toFloatOrNull() ?: 0.0f
+        val humidity = binding.humidityInput.text.toString().toFloatOrNull() ?: 0.0f
+        val rainfall = binding.rainfallInput.text.toString().toFloatOrNull() ?: 0.0f
+        val sunlight = binding.sunlightInput.text.toString().toFloatOrNull() ?: 0.0f
+
+        val soilTypeNumeric = when (soilType) {
+            "01-Aluvial" -> 1.0f
+            "02-Andosol" -> 2.0f
+            "03-Entisol" -> 3.0f
+            "04-Humus" -> 4.0f
+            "05-Inceptisol" -> 5.0f
+            "06-Laterit" -> 6.0f
+            "07-Kapur" -> 7.0f
+            "08-Pasir" -> 8.0f
+            else -> 0.0f
+        }
+
+        val inputArray = floatArrayOf(temperature, humidity, rainfall, sunlight, soilTypeNumeric)
+        moveToResult(currentImageUri ?: error("Current image URI is null"), soilType, inputArray)
+    }
+
+    private fun moveToResult(imageUri: Uri, soilClassification: String, inputArray: FloatArray) {
+        val intent = Intent(requireContext(), ResultActivity::class.java).apply {
+            putExtra(ResultActivity.EXTRA_IMAGE_URI, imageUri.toString())
+            putExtra(ResultActivity.EXTRA_SOIL_CLASSIFICATION, soilClassification)
+            putExtra(ResultActivity.EXTRA_INPUT_ARRAY, inputArray)
+        }
         startActivity(intent)
     }
+
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

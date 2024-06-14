@@ -26,6 +26,7 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
 
     class MyViewHolder(private val binding: HistoryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(history: HistoryEntity) {
             val imageUri = Uri.parse(history.uri)
             binding.resultImage.setImageURI(imageUri)
@@ -33,13 +34,16 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
             binding.textViewTime.text = history.date
 
             binding.root.setOnClickListener {
-                val intent = Intent(binding.root.context, ResultActivity::class.java)
-                intent.putExtra(ResultActivity.EXTRA_IMAGE_URI, history.uri)
-                intent.putExtra(ResultActivity.EXTRA_RESULT, history.result)
-                binding.root.context.startActivity(intent)
+                val context = binding.root.context
+                val intent = Intent(context, ResultActivity::class.java).apply {
+                    putExtra(ResultActivity.EXTRA_IMAGE_URI, history.uri)
+                    putExtra(ResultActivity.EXTRA_SOIL_CLASSIFICATION, history.result)
+                }
+                context.startActivity(intent)
             }
         }
     }
+
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryEntity>() {
