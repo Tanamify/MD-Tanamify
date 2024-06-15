@@ -12,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/green_primary"
-        android:padding="24dp">
+        android:background="@drawable/hero"
+        android:padding="24dp"
+        android:layout_margin="0dp">
 
         <TextView
             android:id="@+id/tv_location"
