@@ -13,6 +13,8 @@ data class HistoryEntity(
     val date: String,
     @ColumnInfo(name = "result")
     val result: String,
+    @ColumnInfo(name = "recommendation")
+    val recommendation: String,
     @ColumnInfo(name = "uri")
     val uri: String
 )

@@ -59,13 +59,12 @@
             android:inputType="text"
             android:paddingStart="20dp"
             android:textColor="@color/black"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_label_name"
             tools:ignore="RtlSymmetry" />
 
-        <!-- New TextView and EditText for Email -->
         <TextView
             android:id="@+id/tv_label_email"
             android:layout_width="wrap_content"
@@ -91,6 +90,7 @@
             android:inputType="textEmailAddress"
             android:textColor="@color/black"
             android:paddingStart="20dp"
+            android:textColorHint="@color/dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_label_email"
@@ -121,7 +121,7 @@
             android:inputType="textPassword"
             android:textColor="@color/black"
             android:paddingStart="20dp"
-            android:textColorHint="#757575"
+            android:textColorHint="@color/dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_label_password"
@@ -138,6 +138,7 @@
             android:text="@string/register"
             android:textAllCaps="false"
             android:textSize="16sp"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/tv_input_password"
             tools:ignore="DuplicateSpeakableTextCheck"
             tools:layout_editor_absoluteX="24dp" />
@@ -149,6 +150,7 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/rubik"
             android:text="@string/or_login"
+            android:textColor="@color/dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_register" />
@@ -164,6 +166,7 @@
             android:text="@string/login"
             android:textAllCaps="false"
             android:textSize="16sp"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/tv_or_register" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

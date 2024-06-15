@@ -48,9 +48,9 @@ class ScanFragment : Fragment() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                showToast("Permission request granted")
+                showToast("Izin akses diberikan")
             } else {
-                showToast("Permission request denied")
+                showToast("Izin akses ditolak")
             }
         }
 
@@ -83,7 +83,7 @@ class ScanFragment : Fragment() {
             btnAnalyze.setOnClickListener {
                 currentImageUri?.let {
                     analyzeImage(it)
-                } ?: showToast("No image selected")
+                } ?: showToast("Tidak ada gambar yang dipilih")
             }
             btnGallery.setOnClickListener {
                 startGallery()
@@ -106,11 +106,11 @@ class ScanFragment : Fragment() {
                 uri,
                 Uri.fromFile(requireContext().cacheDir.resolve("${System.currentTimeMillis()}.jpg"))
             )
-                .withAspectRatio(16F, 9F)
+                .withAspectRatio(1F, 1F)
                 .withMaxResultSize(2000, 2000)
                 .start(requireContext(), this)
         } else {
-            Log.d("Photo Picker", "No media selected")
+            Log.d("Photo Picker", "Tidak ada media yang dipilih")
         }
     }
 
@@ -121,7 +121,7 @@ class ScanFragment : Fragment() {
             val photoFile: File? = try {
                 createImageFile()
             } catch (ex: IOException) {
-                showToast("Error occurred while creating the file")
+                showToast("Terjadi kesalahan saat membuat file")
                 null
             }
             photoFile?.also {
@@ -170,7 +170,7 @@ class ScanFragment : Fragment() {
                     currentImageUri = photoURI
                     currentImageUri?.let {
                         UCrop.of(it, Uri.fromFile(File(currentPhotoPath)))
-                            .withAspectRatio(16F, 9F)
+                            .withAspectRatio(1F, 1F)
                             .withMaxResultSize(2000, 2000)
                             .start(requireContext(), this)
                     }
@@ -206,7 +206,7 @@ class ScanFragment : Fragment() {
                     results?.let {
                         val soilType = it[0].categories[0].label
                         handleClassificationResults(soilType)
-                    } ?: showToast("No results from image classification")
+                    } ?: showToast("Tidak ada hasil dari klasifikasi gambar")
                 }
             }
         )
@@ -232,7 +232,7 @@ class ScanFragment : Fragment() {
         }
 
         val inputArray = floatArrayOf(temperature, humidity, rainfall, sunlight, soilTypeNumeric)
-        moveToResult(currentImageUri ?: error("Current image URI is null"), soilType, inputArray)
+        moveToResult(currentImageUri ?: error("URI gambar saat ini kosong"), soilType, inputArray)
     }
 
     private fun moveToResult(imageUri: Uri, soilClassification: String, inputArray: FloatArray) {

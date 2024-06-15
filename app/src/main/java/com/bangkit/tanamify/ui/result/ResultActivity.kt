@@ -6,12 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bangkit.tanamify.MainActivity
 import com.bangkit.tanamify.databinding.ActivityResultBinding
 import org.tensorflow.lite.Interpreter
 import java.io.FileInputStream
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import com.bangkit.tanamify.data.local.HistoryEntity
+import com.bangkit.tanamify.data.local.TanamifyDatabase
 
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding
@@ -27,7 +34,7 @@ class ResultActivity : AppCompatActivity() {
         try {
             tflite = Interpreter(loadModelFile("model_ann_new.tflite"))
         } catch (e: Exception) {
-            showToast("Failed to load TFLite model: ${e.message}")
+            showToast("Gagal memuat model TFLite: ${e.message}")
         }
 
         val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI))
@@ -72,11 +79,14 @@ class ResultActivity : AppCompatActivity() {
     private fun showRecommendation(inputArray: FloatArray) {
         val recommendations = runAnnModel(inputArray)
         binding.tvRecommendation.text = recommendations
+
+        val soilClassification = binding.tvResultText.text.toString()
+        saveResultToHistory(soilClassification, recommendations, intent.getStringExtra(EXTRA_IMAGE_URI) ?: "")
     }
 
     private fun runAnnModel(inputArray: FloatArray): String {
         if (tflite == null) {
-            showToast("TFLite interpreter is not initialized")
+            showToast("Interpreter TFLite tidak terinisialisasi")
             return "Unknown"
         }
 
@@ -90,7 +100,7 @@ class ResultActivity : AppCompatActivity() {
 
             recommendation
         } catch (e: Exception) {
-            showToast("Failed to run ANN model: ${e.message}")
+            showToast("Gagal menjalankan model ANN: ${e.message}")
             "Unknown"
         }
     }
@@ -122,6 +132,16 @@ class ResultActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun saveResultToHistory(result: String, recommendation: String, uri: String) {
+        val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+        val historyEntity = HistoryEntity(date = date, result = result, recommendation = recommendation, uri = uri)
+
+        lifecycleScope.launch {
+            val db = TanamifyDatabase.getDatabase(applicationContext)
+            db.historyDao().addHistory(historyEntity)
+        }
+    }
+
     override fun onDestroy() {
         tflite?.close()
         super.onDestroy()
@@ -131,6 +151,6 @@ class ResultActivity : AppCompatActivity() {
         const val EXTRA_IMAGE_URI = "extra_image_uri"
         const val EXTRA_SOIL_CLASSIFICATION = "extra_soil_classification"
         const val EXTRA_INPUT_ARRAY = "extra_input_array"
-        const val NUM_OUTPUT_CLASSES = 6 // Number of plant classes in the model
+        const val NUM_OUTPUT_CLASSES = 6
     }
 }

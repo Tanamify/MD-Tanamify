@@ -31,6 +31,7 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
             val imageUri = Uri.parse(history.uri)
             binding.resultImage.setImageURI(imageUri)
             binding.textViewLabel.text = history.result
+            binding.textRecommendation.text = history.recommendation
             binding.textViewTime.text = history.date
 
             binding.root.setOnClickListener {
