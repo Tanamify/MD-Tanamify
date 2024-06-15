@@ -15,6 +15,7 @@ import com.bangkit.tanamify.databinding.FragmentProfileBinding
 import com.bangkit.tanamify.ui.login.LoginActivity
 import com.bangkit.tanamify.utils.ViewModelFactory
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
 
 class ProfileFragment : Fragment() {
 
@@ -35,11 +36,17 @@ class ProfileFragment : Fragment() {
 
         setLogoutClickListener()
 
-        val textView: TextView = binding.tvName
-        profileViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        fetchAndBindUserData()
+
         return root
+    }
+
+    private fun fetchAndBindUserData() {
+        lifecycleScope.launch {
+            val userPreference = UserPreference.getInstance(requireContext().dataStore)
+            val user = userPreference.getSession().first()
+            binding.tvUseremail.text = user.email
+        }
     }
 
     private fun setLogoutClickListener() {

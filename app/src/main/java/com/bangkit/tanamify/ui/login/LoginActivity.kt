@@ -15,7 +15,6 @@ import com.bangkit.tanamify.databinding.ActivityLoginBinding
 import com.bangkit.tanamify.ui.register.RegisterActivity
 import com.bangkit.tanamify.utils.ToastUtils
 import com.bangkit.tanamify.utils.ViewModelFactory
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
