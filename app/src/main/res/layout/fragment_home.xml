@@ -7,44 +7,13 @@
     android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ivHero"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="190dp"
         android:background="@drawable/hero"
         android:padding="24dp"
-        android:layout_margin="0dp">
-
-        <TextView
-            android:id="@+id/tv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_loc_foreground"
-            android:text="Menteng, Jakarta Pusat, Jakarta"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/rubik"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="36°C"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:fontFamily="@font/rubik_bold"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/tv_greeting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hai Fulan!"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:fontFamily="@font/rubik_bold"
-            android:layout_marginTop="28dp" />
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/tv_welcome_message"
@@ -54,8 +23,25 @@
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:fontFamily="@font/rubik"
-            android:layout_marginTop="4dp" />
-    </LinearLayout>
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hai Fulan!"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:fontFamily="@font/rubik_bold"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_welcome_message" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <TextView
         android:id="@+id/historyTitle"
