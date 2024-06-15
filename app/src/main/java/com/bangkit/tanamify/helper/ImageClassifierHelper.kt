@@ -20,7 +20,7 @@ import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 
 class ImageClassifierHelper(
     private var threshold: Float = 0.1f,
-    private var maxResults: Int = 3,
+    private var maxResults: Int = 1,
     private val modelName: String = "image_processing_tanah_2_with_metadata.tflite",
     val context: Context,
     val classifierListener: ClassifierListener?,
@@ -53,7 +53,6 @@ class ImageClassifierHelper(
     }
 
     fun classifyStaticImage(imageUri: Uri) {
-
         if (imageClassifier == null) {
             setupImageClassifier()
         }
@@ -63,24 +62,21 @@ class ImageClassifierHelper(
             .add(CastOp(DataType.FLOAT32))
             .build()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val source = ImageDecoder.createSource(context.contentResolver, imageUri)
             ImageDecoder.decodeBitmap(source)
         } else {
             MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
-        }.copy(Bitmap.Config.ARGB_8888, true)?.let { bitmap ->
-            val tensorImage = imageProcessor.process(TensorImage.fromBitmap(bitmap))
-            val result = imageClassifier?.classify(tensorImage)
-            classifierListener?.onResults(result)
-        }
-    }
+        }.copy(Bitmap.Config.ARGB_8888, true)
 
+        val tensorImage = imageProcessor.process(TensorImage.fromBitmap(bitmap))
+        val result = imageClassifier?.classify(tensorImage)
+        classifierListener?.onResults(result)
+    }
 
     interface ClassifierListener {
         fun onError(error: String)
-        fun onResults(
-            results: List<Classifications>?
-        )
+        fun onResults(results: List<Classifications>?)
     }
 
     companion object {

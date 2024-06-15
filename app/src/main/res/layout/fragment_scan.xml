@@ -15,12 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="340dp"
+
                 android:layout_margin="24dp"
                 android:background="@drawable/card_rounded"
                 app:shapeAppearanceOverlay="@style/RoundedCornerImageView"
@@ -34,6 +36,7 @@
                 android:fontFamily="@font/rubik"
                 android:text="Ambil gambar dari"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -72,11 +75,66 @@
 
             </LinearLayout>
 
+            <!-- Input Fields for Environmental Variables -->
+            <EditText
+                android:id="@+id/temperatureInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Temperatur rata-rata (°C)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_gray"
+                android:background="@drawable/button_secondary" />
+
+            <EditText
+                android:id="@+id/humidityInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Kelembapan rata-rata (%)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_gray"
+                android:background="@drawable/button_secondary" />
+
+            <EditText
+                android:id="@+id/rainfallInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Curah hujan rata-rata per hari (mm)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_gray"
+                android:background="@drawable/button_secondary" />
+
+            <EditText
+                android:id="@+id/sunlightInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:hint="Lama penyinaran matahari per hari (jam)"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_gray"
+                android:background="@drawable/button_secondary" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_analyze"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="70dp"
                 android:background="@drawable/button_primary"
                 android:fontFamily="@font/rubik_bold"
                 android:text="Analisis"

@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.bangkit.tanamify.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class   MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
