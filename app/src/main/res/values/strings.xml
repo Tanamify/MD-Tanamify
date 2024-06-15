@@ -24,4 +24,9 @@
     <string name="or_login">Sudah Mempunyai Akun</string>
     <string name="tanamify">Tanamify</string>
     <string name="masukkan_email">Masukkan Email</string>
+    <string name="fulan">Fulan!</string>
+    <string name="hai">Hai,</string>
+    <string name="default_user_name" />
+    <string name="Penanam">Penanam</string>
+    <string name="toggle_password_visibility" />
 </resources>

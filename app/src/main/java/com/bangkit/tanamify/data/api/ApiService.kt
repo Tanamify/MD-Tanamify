@@ -2,9 +2,13 @@ package com.bangkit.tanamify.data.api
 
 import com.bangkit.tanamify.data.retrofit.response.LoginRequest
 import com.bangkit.tanamify.data.retrofit.response.LoginResponse
+import com.bangkit.tanamify.data.retrofit.response.LogoutResponse
+import com.bangkit.tanamify.data.retrofit.response.ProfileResponse
 import com.bangkit.tanamify.data.retrofit.response.RegisterRequest
 import com.bangkit.tanamify.data.retrofit.response.RegisterResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
@@ -13,4 +17,8 @@ interface ApiService {
 
     @POST("auth/register")
     suspend fun userRegister(@Body registerRequest: RegisterRequest): RegisterResponse
+
+    @POST("api/auth/logout")
+    suspend fun logout(@Header("Authorization") token: String): LogoutResponse
+
 }

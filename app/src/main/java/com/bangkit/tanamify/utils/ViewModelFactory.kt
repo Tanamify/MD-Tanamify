@@ -8,7 +8,9 @@ import com.bangkit.tanamify.data.di.Injection
 import com.bangkit.tanamify.repository.HistoryRepository
 import com.bangkit.tanamify.ui.home.HomeViewModel
 import com.bangkit.tanamify.ui.login.LoginViewModel
+import com.bangkit.tanamify.ui.profile.ProfileViewModel
 import com.bangkit.tanamify.ui.register.RegisterViewModel
+import com.bangkit.tanamify.ui.splash.SplashViewModel
 
 class ViewModelFactory private constructor(
     private val mApplication: Application,
@@ -35,6 +37,11 @@ class ViewModelFactory private constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
+            modelClass.isAssignableFrom(SplashViewModel::class.java) -> {
+                SplashViewModel(historyRepository) as T
+            }
+
+
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(historyRepository) as T
             }
