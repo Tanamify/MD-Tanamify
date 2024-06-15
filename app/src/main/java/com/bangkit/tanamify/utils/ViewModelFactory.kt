@@ -36,20 +36,20 @@ class ViewModelFactory private constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(historyRepository) as T
             }
-
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(historyRepository) as T
             }
-
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(mApplication, historyRepository) as T
             }
-
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(historyRepository) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class" + modelClass.name)
         }
     }
 }
+

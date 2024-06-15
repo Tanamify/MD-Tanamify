@@ -18,7 +18,6 @@ import com.bangkit.tanamify.utils.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
-@Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -28,9 +27,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val passwordInputLayout: TextInputLayout = binding.inputLayoutPassword
-        passwordInputLayout.isPasswordVisibilityToggleEnabled = true
 
 
         val viewModelFactory = ViewModelFactory.getInstance(this)

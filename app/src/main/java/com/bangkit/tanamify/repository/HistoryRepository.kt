@@ -8,13 +8,11 @@ import com.bangkit.tanamify.data.pref.UserModel
 import com.bangkit.tanamify.data.pref.UserPreference
 import com.bangkit.tanamify.data.retrofit.response.LoginRequest
 import com.bangkit.tanamify.data.retrofit.response.LoginResponse
-import com.bangkit.tanamify.data.retrofit.response.ProfileResponse
 import com.bangkit.tanamify.data.retrofit.response.RegisterRequest
 import com.bangkit.tanamify.data.retrofit.response.RegisterResponse
 import com.bangkit.tanamify.data.state.ResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
@@ -58,19 +56,14 @@ class HistoryRepository(
         }
     }.flowOn(Dispatchers.IO)
 
+
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
     }
-    suspend fun logout(): Flow<ResultState<String>> = flow {
-        try {
-            val token = userPreference.getToken()
-            val response = apiService.logout("Bearer $token")
-            emit(ResultState.Success(response.message))
-            userPreference.logout()
-        } catch (e: Exception) {
-            emit(ResultState.Error(e.message ?: "An error occurred"))
-        }
-    }.flowOn(Dispatchers.IO)
+
+    suspend fun logout() {
+        userPreference.logout()
+    }
 
     fun updateApiService(apiService: ApiService) {
         this.apiService = apiService

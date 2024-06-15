@@ -25,10 +25,6 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val passwordInputLayout: TextInputLayout = binding.inputLayoutPassword
-        passwordInputLayout.isPasswordVisibilityToggleEnabled = true
-
-
         val viewModelFactory = ViewModelFactory.getInstance(this)
         registerViewModel = ViewModelProvider(this, viewModelFactory)[RegisterViewModel::class.java]
 

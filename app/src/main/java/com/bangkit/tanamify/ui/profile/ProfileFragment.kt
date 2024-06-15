@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.bangkit.tanamify.data.api.ApiService
 import com.bangkit.tanamify.data.pref.UserPreference
+import com.bangkit.tanamify.data.pref.dataStore
 import com.bangkit.tanamify.databinding.FragmentProfileBinding
-import com.bangkit.tanamify.repository.HistoryRepository
 import com.bangkit.tanamify.ui.login.LoginActivity
 import com.bangkit.tanamify.utils.ViewModelFactory
 import kotlinx.coroutines.launch
@@ -21,25 +19,19 @@ import kotlinx.coroutines.launch
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var profileViewModel: ProfileViewModel
-  
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val profileViewModel =
-            ViewModelProvider(this)[ProfileViewModel::class.java]
-
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val factory = ViewModelFactory.getInstance(requireContext())
+        profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
 
         setLogoutClickListener()
 
@@ -54,6 +46,8 @@ class ProfileFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             lifecycleScope.launch {
                 profileViewModel.logout()
+                val userPreference = UserPreference.getInstance(requireContext().dataStore)
+                userPreference.logout()
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                         Intent.FLAG_ACTIVITY_NEW_TASK or

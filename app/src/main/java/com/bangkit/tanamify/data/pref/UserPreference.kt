@@ -39,7 +39,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
-
     fun getSession(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
             UserModel(
@@ -50,14 +49,17 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
-    suspend fun getToken(): String? {
-        val tokenKey = stringPreferencesKey("token")
-        return dataStore.data.map { it[tokenKey] }.first()
+    suspend fun isLoggedIn(): Boolean {
+        return dataStore.data.map { preferences ->
+            preferences[IS_LOGIN_KEY] ?: false
+        }.first()
     }
 
     suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences.remove(stringPreferencesKey("token"))
+            preferences.remove(EMAIL_KEY)
+            preferences.remove(TOKEN_KEY)
+            preferences[IS_LOGIN_KEY] = false
         }
     }
 
