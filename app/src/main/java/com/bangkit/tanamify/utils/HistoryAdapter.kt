@@ -12,7 +12,8 @@ import com.bangkit.tanamify.databinding.HistoryCardBinding
 import com.bangkit.tanamify.ui.result.ResultActivity
 
 
-class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter(private val onDeleteClickListener: (HistoryEntity) -> Unit) :
+    ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = HistoryCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,9 +23,13 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val history = getItem(position)
         holder.bind(history)
+
+        holder.binding.btnDelete.setOnClickListener {
+            onDeleteClickListener(history)
+        }
     }
 
-    class MyViewHolder(private val binding: HistoryCardBinding) :
+    class MyViewHolder(val binding: HistoryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(history: HistoryEntity) {

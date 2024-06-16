@@ -69,6 +69,10 @@ class HistoryRepository(
         this.apiService = apiService
     }
 
+    suspend fun deleteHistory(historyEntity: HistoryEntity) {
+        historyDao.deleteHistory(historyEntity)
+    }
+
     companion object {
         @Volatile
         private var instance: HistoryRepository? = null

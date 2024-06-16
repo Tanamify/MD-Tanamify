@@ -2,10 +2,12 @@ package com.bangkit.tanamify.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bangkit.tanamify.MainActivity
+import com.bangkit.tanamify.R
 import com.bangkit.tanamify.data.api.ApiConfig
 import com.bangkit.tanamify.data.di.Injection
 import com.bangkit.tanamify.data.pref.UserModel
@@ -21,12 +23,12 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
+    private var isPasswordVisible: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         val viewModelFactory = ViewModelFactory.getInstance(this)
         loginViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
@@ -45,6 +47,22 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
+        binding.btnTogglePassword.setOnClickListener {
+            togglePasswordVisibility()
+        }
+    }
+
+    private fun togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            binding.tvInputPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            binding.btnTogglePassword.setImageResource(R.drawable.baseline_visibility_off_24)
+        } else {
+            binding.tvInputPassword.inputType = InputType.TYPE_CLASS_TEXT
+            binding.btnTogglePassword.setImageResource(R.drawable.baseline_visibility_24)
+        }
+        isPasswordVisible = !isPasswordVisible
+        binding.tvInputPassword.setSelection(binding.tvInputPassword.text.length)
     }
 
     private fun handleLoginResult(result: ResultState<LoginResponse>, email: String) {

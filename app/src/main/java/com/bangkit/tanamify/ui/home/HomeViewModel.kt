@@ -32,4 +32,11 @@ class HomeViewModel(
             _historyList.value = historyRepository.getHistory()
         }
     }
+
+    fun deleteHistory(historyEntity: HistoryEntity) {
+        viewModelScope.launch {
+            historyRepository.deleteHistory(historyEntity)
+            loadHistory()
+        }
+    }
 }

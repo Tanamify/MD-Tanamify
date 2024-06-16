@@ -35,15 +35,18 @@ class HomeFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.historyList.layoutManager = layoutManager
 
+        val adapter = HistoryAdapter { history ->
+            deleteHistory(history)
+        }
+        binding.historyList.adapter = adapter
+
         viewModel.historyList.observe(viewLifecycleOwner) {
-            setHistoryData(it)
+            adapter.submitList(it)
         }
     }
 
-    private fun setHistoryData(consumer: List<HistoryEntity>) {
-        val adapter = HistoryAdapter()
-        adapter.submitList(consumer)
-        binding.historyList.adapter = adapter
+    private fun deleteHistory(history: HistoryEntity) {
+        viewModel.deleteHistory(history)
     }
 
     override fun onDestroyView() {

@@ -131,6 +131,8 @@ class ResultActivity : AppCompatActivity() {
 
             tflite!!.run(input, output)
 
+            Log.d("OutputArray", "Content: ${output[0].joinToString(", ")}")
+
             val recommendation = getRecommendationLabel(output[0])
 
             recommendation
@@ -143,12 +145,12 @@ class ResultActivity : AppCompatActivity() {
     private fun getRecommendationLabel(outputArray: FloatArray): String {
         val maxIndex = outputArray.indices.maxByOrNull { outputArray[it] } ?: -1
         return when (maxIndex) {
-            0 -> "Kedelai"
-            1 -> "Jagung"
-            2 -> "Ubi Jalar"
-            3 -> "Ubi Kayu"
-            4 -> "Padi Gogo"
-            5 -> "Padi Sawah"
+            0 -> "Jagung"
+            1 -> "Kedelai"
+            2 -> "Padi Gogo"
+            3 -> "Padi Sawah"
+            4 -> "Ubi Jalar"
+            5 -> "Ubi Kayu"
             else -> "Unknown"
         }
     }

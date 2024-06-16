@@ -29,4 +29,5 @@
     <string name="default_user_name" />
     <string name="Penanam">Penanam</string>
     <string name="toggle_password_visibility" />
+    <string name="delete">Hapus</string>
 </resources>
