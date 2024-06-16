@@ -40,6 +40,11 @@ class ResultActivity : AppCompatActivity() {
         val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI))
         val soilClassification = intent.getStringExtra(EXTRA_SOIL_CLASSIFICATION)
         val inputArray = intent.getFloatArrayExtra(EXTRA_INPUT_ARRAY)
+        val temperature = intent.getFloatExtra(KEY_TEMPERATURE, 0f)
+        val humidity = intent.getFloatExtra(KEY_HUMIDITY, 0f)
+        val rain = intent.getFloatExtra(KEY_RAIN, 0f)
+        val sun = intent.getFloatExtra(KEY_SUN, 0f)
+        val recommendation = intent.getStringExtra(KEY_RECOMMENDATION)
 
         imageUri?.let {
             Log.d("Image URI", "showImage: $it")
@@ -49,6 +54,31 @@ class ResultActivity : AppCompatActivity() {
         soilClassification?.let {
             Log.d("Soil Classification", "showSoilClassification: $it")
             binding.tvResultText.text = it
+        }
+
+        temperature.let {
+            Log.d("temperature", "showTemperature: $it")
+            binding.tvResultTemp.text = it.toString()
+        }
+
+        humidity.let {
+            Log.d("humidity", "showHumidity: $it")
+            binding.tvResultHumidity.text = it.toString()
+        }
+
+        rain.let {
+            Log.d("rain", "showRain: $it")
+            binding.tvResultRain.text = it.toString()
+        }
+
+        sun.let {
+            Log.d("sun", "showSun: $it")
+            binding.tvResultSun.text = it.toString()
+        }
+
+        recommendation.let {
+            Log.d("recommendation", "showRecommendation: $it")
+            binding.tvRecommendation.text = it.toString()
         }
 
         inputArray?.let {
@@ -81,7 +111,12 @@ class ResultActivity : AppCompatActivity() {
         binding.tvRecommendation.text = recommendations
 
         val soilClassification = binding.tvResultText.text.toString()
-        saveResultToHistory(soilClassification, recommendations, intent.getStringExtra(EXTRA_IMAGE_URI) ?: "")
+        val temperature = inputArray[0]
+        val humidity = inputArray[1]
+        val rain = inputArray[2]
+        val sun = inputArray[3]
+
+        saveResultToHistory(soilClassification, temperature, humidity, rain, sun, recommendations, intent.getStringExtra(EXTRA_IMAGE_URI) ?: "")
     }
 
     private fun runAnnModel(inputArray: FloatArray): String {
@@ -132,9 +167,18 @@ class ResultActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun saveResultToHistory(result: String, recommendation: String, uri: String) {
+    private fun saveResultToHistory(result: String, temperature: Float, humidity: Float, rain: Float, sun: Float, recommendation: String, uri: String) {
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-        val historyEntity = HistoryEntity(date = date, result = result, recommendation = recommendation, uri = uri)
+        val historyEntity = HistoryEntity(
+            date = date,
+            result = result,
+            temperature = temperature,
+            humidity = humidity,
+            rain = rain,
+            sun = sun,
+            recommendation = recommendation,
+            uri = uri
+        )
 
         lifecycleScope.launch {
             val db = TanamifyDatabase.getDatabase(applicationContext)
@@ -152,5 +196,11 @@ class ResultActivity : AppCompatActivity() {
         const val EXTRA_SOIL_CLASSIFICATION = "extra_soil_classification"
         const val EXTRA_INPUT_ARRAY = "extra_input_array"
         const val NUM_OUTPUT_CLASSES = 6
+
+        const val KEY_TEMPERATURE = "temperature"
+        const val KEY_HUMIDITY = "humidity"
+        const val KEY_RAIN = "rain"
+        const val KEY_SUN = "sun"
+        const val KEY_RECOMMENDATION = "recommendation"
     }
 }

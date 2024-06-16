@@ -13,6 +13,14 @@ data class HistoryEntity(
     val date: String,
     @ColumnInfo(name = "result")
     val result: String,
+    @ColumnInfo(name = "temperature")
+    val temperature: Float,
+    @ColumnInfo(name = "humidity")
+    val humidity: Float,
+    @ColumnInfo(name = "rain")
+    val rain: Float,
+    @ColumnInfo(name = "sun")
+    val sun: Float,
     @ColumnInfo(name = "recommendation")
     val recommendation: String,
     @ColumnInfo(name = "uri")

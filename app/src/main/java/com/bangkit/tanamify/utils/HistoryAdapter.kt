@@ -39,6 +39,12 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
                 val intent = Intent(context, ResultActivity::class.java).apply {
                     putExtra(ResultActivity.EXTRA_IMAGE_URI, history.uri)
                     putExtra(ResultActivity.EXTRA_SOIL_CLASSIFICATION, history.result)
+                    putExtra(ResultActivity.KEY_TEMPERATURE, history.temperature)
+                    putExtra(ResultActivity.KEY_HUMIDITY, history.humidity)
+                    putExtra(ResultActivity.KEY_RAIN, history.rain)
+                    putExtra(ResultActivity.KEY_SUN, history.sun)
+                    putExtra(ResultActivity.KEY_RECOMMENDATION, history.recommendation)
+
                 }
                 context.startActivity(intent)
             }
