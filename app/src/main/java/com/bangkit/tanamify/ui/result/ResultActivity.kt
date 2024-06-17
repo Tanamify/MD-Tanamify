@@ -32,62 +32,41 @@ class ResultActivity : AppCompatActivity() {
         setupActionBar()
 
         try {
-            tflite = Interpreter(loadModelFile("model_ann_new.tflite"))
+            tflite = Interpreter(loadModelFile("ANN_MODEL.tflite"))
         } catch (e: Exception) {
             showToast("Gagal memuat model TFLite: ${e.message}")
         }
 
         val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI))
         val soilClassification = intent.getStringExtra(EXTRA_SOIL_CLASSIFICATION)
-        val inputArray = intent.getFloatArrayExtra(EXTRA_INPUT_ARRAY)
         val temperature = intent.getFloatExtra(KEY_TEMPERATURE, 0f)
         val humidity = intent.getFloatExtra(KEY_HUMIDITY, 0f)
-        val rain = intent.getFloatExtra(KEY_RAIN, 0f)
-        val sun = intent.getFloatExtra(KEY_SUN, 0f)
-        val recommendation = intent.getStringExtra(KEY_RECOMMENDATION)
+        val rainfall = intent.getFloatExtra(KEY_RAIN, 0f)
+        val sunlight = intent.getFloatExtra(KEY_SUN, 0f)
+
+        val soilTypeNumeric = convertSoilClassificationToFloat(soilClassification)
+        val inputArray = floatArrayOf(temperature, humidity, rainfall, sunlight, soilTypeNumeric)
 
         imageUri?.let {
-            Log.d("Image URI", "showImage: $it")
             binding.resultImage.setImageURI(it)
         }
 
         soilClassification?.let {
-            Log.d("Soil Classification", "showSoilClassification: $it")
             binding.tvResultText.text = it
         }
 
-        temperature.let {
-            Log.d("temperature", "showTemperature: $it")
-            binding.tvResultTemp.text = it.toString()
-        }
+        binding.tvResultTemp.text = "$temperature °C"
+        binding.tvResultHumidity.text = "$humidity %"
+        binding.tvResultRain.text = "$rainfall mm"
+        binding.tvResultSun.text = "$sunlight jam"
 
-        humidity.let {
-            Log.d("humidity", "showHumidity: $it")
-            binding.tvResultHumidity.text = it.toString()
-        }
+        Log.d("ResultActivity", "Temperature: $temperature °C")
+        Log.d("ResultActivity", "Humidity: $humidity %")
+        Log.d("ResultActivity", "Rainfall: $rainfall mm")
+        Log.d("ResultActivity", "Sunlight: $sunlight jam")
+        Log.d("ResultActivity", "Jenis Tanah: $soilTypeNumeric")
 
-        rain.let {
-            Log.d("rain", "showRain: $it")
-            binding.tvResultRain.text = it.toString()
-        }
-
-        sun.let {
-            Log.d("sun", "showSun: $it")
-            binding.tvResultSun.text = it.toString()
-        }
-
-        recommendation.let {
-            Log.d("recommendation", "showRecommendation: $it")
-            binding.tvRecommendation.text = it.toString()
-        }
-
-        inputArray?.let {
-            binding.tvResultTemp.text = "${it[0]} °C"
-            binding.tvResultHumidity.text = "${it[1]} %"
-            binding.tvResultRain.text = "${it[2]} mm"
-            binding.tvResultSun.text = "${it[3]} hours"
-            showRecommendation(it)
-        }
+        showRecommendation(inputArray)
 
         binding.btnOkay.setOnClickListener {
             navigateToMainActivity()
@@ -115,8 +94,23 @@ class ResultActivity : AppCompatActivity() {
         val humidity = inputArray[1]
         val rain = inputArray[2]
         val sun = inputArray[3]
+        val soil = inputArray[4]
 
-        saveResultToHistory(soilClassification, temperature, humidity, rain, sun, recommendations, intent.getStringExtra(EXTRA_IMAGE_URI) ?: "")
+        Log.d("ResultActivity", "Temperature: $temperature °C")
+        Log.d("ResultActivity", "Humidity: $humidity %")
+        Log.d("ResultActivity", "Rainfall: $rain mm")
+        Log.d("ResultActivity", "Sunlight: $sun jam")
+        Log.d("ResultActivity", "SoilType: $soil")
+
+        saveResultToHistory(
+            soilClassification,
+            temperature,
+            humidity,
+            rain,
+            sun,
+            recommendations,
+            intent.getStringExtra(EXTRA_IMAGE_URI) ?: ""
+        )
     }
 
     private fun runAnnModel(inputArray: FloatArray): String {
@@ -126,6 +120,8 @@ class ResultActivity : AppCompatActivity() {
         }
 
         return try {
+            Log.d("ResultActivity", "Input Array (before model): ${inputArray.joinToString(", ")}")
+
             val input = arrayOf(inputArray)
             val output = Array(1) { FloatArray(NUM_OUTPUT_CLASSES) }
 
@@ -143,8 +139,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun getRecommendationLabel(outputArray: FloatArray): String {
-        val maxIndex = outputArray.indices.maxByOrNull { outputArray[it] } ?: -1
-        return when (maxIndex) {
+        return when (outputArray.indices.maxByOrNull { outputArray[it] } ?: -1) {
             0 -> "Jagung"
             1 -> "Kedelai"
             2 -> "Padi Gogo"
@@ -185,6 +180,21 @@ class ResultActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val db = TanamifyDatabase.getDatabase(applicationContext)
             db.historyDao().addHistory(historyEntity)
+        }
+    }
+
+    private fun convertSoilClassificationToFloat(soilClassification: String?): Float {
+        Log.d("ResultActivity", "Convert Soil Classification: $soilClassification")
+        return when (soilClassification) {
+            "01-Aluvial" -> 1f
+            "02-Andosol" -> 2f
+            "03-Entisol" -> 3f
+            "04-Humus" -> 4f
+            "05-Inceptisol" -> 5f
+            "06-Laterit" -> 6f
+            "07-Kapur" -> 7f
+            "08-Pasir" -> 8f
+            else -> 3f
         }
     }
 

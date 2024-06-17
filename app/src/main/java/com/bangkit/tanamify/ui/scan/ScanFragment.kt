@@ -214,36 +214,37 @@ class ScanFragment : Fragment() {
     }
 
     private fun handleClassificationResults(soilType: String) {
-        val temperature = binding.temperatureInput.text.toString().toFloatOrNull() ?: 0.0f
-        val humidity = binding.humidityInput.text.toString().toFloatOrNull() ?: 0.0f
-        val rainfall = binding.rainfallInput.text.toString().toFloatOrNull() ?: 0.0f
-        val sunlight = binding.sunlightInput.text.toString().toFloatOrNull() ?: 0.0f
+        val temperature = binding.temperatureInput.text.toString().toFloatOrNull()
+        val humidity = binding.humidityInput.text.toString().toFloatOrNull()
+        val rainfall = binding.rainfallInput.text.toString().toFloatOrNull()
+        val sunlight = binding.sunlightInput.text.toString().toFloatOrNull()
 
-        val soilTypeNumeric = when (soilType) {
-            "01-Aluvial" -> 1.0f
-            "02-Andosol" -> 2.0f
-            "03-Entisol" -> 3.0f
-            "04-Humus" -> 4.0f
-            "05-Inceptisol" -> 5.0f
-            "06-Laterit" -> 6.0f
-            "07-Kapur" -> 7.0f
-            "08-Pasir" -> 8.0f
-            else -> 0.0f
+        if (temperature == null || humidity == null || rainfall == null || sunlight == null) {
+            showToast("Mohon masukkan nilai yang valid untuk semua input iklim.")
+            return
         }
 
-        val inputArray = floatArrayOf(temperature, humidity, rainfall, sunlight, soilTypeNumeric)
-        moveToResult(currentImageUri ?: error("URI gambar saat ini kosong"), soilType, inputArray)
+        moveToResult(
+            currentImageUri ?: error("URI gambar saat ini kosong"),
+            soilType,
+            temperature,
+            humidity,
+            rainfall,
+            sunlight
+        )
     }
 
-    private fun moveToResult(imageUri: Uri, soilClassification: String, inputArray: FloatArray) {
+    private fun moveToResult(imageUri: Uri, soilClassification: String, temperature: Float, humidity: Float, rainfall: Float, sunlight: Float) {
         val intent = Intent(requireContext(), ResultActivity::class.java).apply {
             putExtra(ResultActivity.EXTRA_IMAGE_URI, imageUri.toString())
             putExtra(ResultActivity.EXTRA_SOIL_CLASSIFICATION, soilClassification)
-            putExtra(ResultActivity.EXTRA_INPUT_ARRAY, inputArray)
+            putExtra(ResultActivity.KEY_TEMPERATURE, temperature)
+            putExtra(ResultActivity.KEY_HUMIDITY, humidity)
+            putExtra(ResultActivity.KEY_RAIN, rainfall)
+            putExtra(ResultActivity.KEY_SUN, sunlight)
         }
         startActivity(intent)
     }
-
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
