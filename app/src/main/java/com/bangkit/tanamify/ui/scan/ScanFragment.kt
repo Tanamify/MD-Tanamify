@@ -138,17 +138,17 @@ class ScanFragment : Fragment() {
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        val timeStamp: String =
-            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File = requireContext().getExternalFilesDir(null)!!
+        val fileName = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
         return File.createTempFile(
-            "JPEG_${timeStamp}_",
+            fileName,
             ".jpg",
             storageDir
         ).apply {
             currentPhotoPath = absolutePath
         }
     }
+
 
     @Deprecated(
         "Deprecated in Java", ReplaceWith(
