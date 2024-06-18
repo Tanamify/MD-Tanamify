@@ -35,7 +35,7 @@ class ResultActivity : AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupActionBar()
+        supportActionBar?.hide()
 
         try {
             tflite = Interpreter(loadModelFile("ANN_MODEL.tflite"))
@@ -77,12 +77,6 @@ class ResultActivity : AppCompatActivity() {
 
         binding.btnOkay.setOnClickListener {
             navigateToMainActivity()
-        }
-    }
-
-    private fun setupActionBar() {
-        supportActionBar?.apply {
-            title = "Hasil Analisis"
         }
     }
 

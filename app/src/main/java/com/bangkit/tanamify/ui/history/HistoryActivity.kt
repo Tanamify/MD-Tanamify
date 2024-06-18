@@ -14,7 +14,7 @@ class HistoryActivity : AppCompatActivity() {
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupActionBar()
+        supportActionBar?.hide()
 
         val imageUri = intent.getStringExtra(EXTRA_IMAGE_URI)?.let { Uri.parse(it) }
         val soilClassification = intent.getStringExtra(EXTRA_SOIL_CLASSIFICATION)
@@ -42,12 +42,6 @@ class HistoryActivity : AppCompatActivity() {
 
         binding.btnOkay.setOnClickListener {
             finish()
-        }
-    }
-
-    private fun setupActionBar() {
-        supportActionBar?.apply {
-            title = "History Hasil Analisis"
         }
     }
 
