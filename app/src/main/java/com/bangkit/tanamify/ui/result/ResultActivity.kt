@@ -44,7 +44,7 @@ class ResultActivity : AppCompatActivity() {
         }
 
         val imageUri = intent.getStringExtra(EXTRA_IMAGE_URI)?.let { Uri.parse(it) }
-        val soilClassification = intent.getStringExtra(EXTRA_SOIL_CLASSIFICATION)
+        val soilClassification = intent.getStringExtra(EXTRA_SOIL_CLASSIFICATION)?.substringAfter('-')
         val temperature = intent.getFloatExtra(KEY_TEMPERATURE, 0f)
         val humidity = intent.getFloatExtra(KEY_HUMIDITY, 0f)
         val rainfall = intent.getFloatExtra(KEY_RAIN, 0f)
@@ -163,14 +163,14 @@ class ResultActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveResultToHistory(result: String, temperature: Float, humidity: Float, rain: Float, sun: Float, recommendation: String, uri: String) {
-        val currentTime = ZonedDateTime.now(ZoneId.of("Asia/Jakarta")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        val currentTime = ZonedDateTime.now(ZoneId.of("Asia/Jakarta")).format(DateTimeFormatter.ISO_INSTANT)
 
         val fileName = extractFileName(uri)
         Log.d("ResultActivity", "Saving Image File Name: $fileName")
         val historyRequest = HistoryRequest(
             id = UUID.randomUUID().toString(),
             result = recommendation,
-            soil = result,
+            soil = result.substringAfter('-'),
             temp = temperature,
             humidity = humidity,
             rain = rain,
@@ -209,14 +209,14 @@ class ResultActivity : AppCompatActivity() {
     private fun convertSoilClassificationToFloat(soilClassification: String?): Float {
         Log.d("ResultActivity", "Convert Soil Classification: $soilClassification")
         return when (soilClassification?.trim()) {
-            "01-Aluvial" -> 1f
-            "02-Andosol" -> 2f
-            "03-Entisol" -> 3f
-            "04-Humus" -> 4f
-            "05-Inceptisol" -> 5f
-            "06-Laterit" -> 6f
-            "07-Kapur" -> 7f
-            "08-Pasir" -> 8f
+            "Aluvial" -> 1f
+            "Andosol" -> 2f
+            "Entisol" -> 3f
+            "Humus" -> 4f
+            "Inceptisol" -> 5f
+            "Laterit" -> 6f
+            "Kapur" -> 7f
+            "Pasir" -> 8f
             else -> {
                 Log.e("ResultActivity", "Unknown soil classification: $soilClassification")
                 0f

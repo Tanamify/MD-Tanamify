@@ -10,13 +10,14 @@
     android:orientation="horizontal">
 
     <!-- Image on the left -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/resultImage"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_gallery_foreground"
+        app:shapeAppearanceOverlay="@style/RoundedCornerImageViewSecond"
         android:scaleType="centerCrop"
         android:layout_marginEnd="16dp"/>
 

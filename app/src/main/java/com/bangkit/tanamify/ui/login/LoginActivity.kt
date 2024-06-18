@@ -87,7 +87,6 @@ class LoginActivity : AppCompatActivity() {
                 ToastUtils.showToast(this, "Login Gagal: ${result.error}")
             }
             is ResultState.Loading -> {}
-            else -> {}
         }
     }
 

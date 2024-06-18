@@ -32,7 +32,7 @@ class HistoryAdapter(
             val imagePath = "file:///data/user/0/com.bangkit.tanamify/cache/" + history.image
             val imageUri = Uri.parse(imagePath)
             binding.resultImage.setImageURI(imageUri)
-            binding.textViewLabel.text = history.soil
+            binding.textViewLabel.text = history.soil.substringAfter('-')
             binding.textRecommendation.text = history.result
             binding.textViewTime.text = history.createdAt
 
@@ -40,7 +40,7 @@ class HistoryAdapter(
                 val context = binding.root.context
                 val intent = Intent(context, HistoryActivity::class.java).apply {
                     putExtra(HistoryActivity.EXTRA_IMAGE_URI, imagePath)
-                    putExtra(HistoryActivity.EXTRA_SOIL_CLASSIFICATION, history.soil)
+                    putExtra(HistoryActivity.EXTRA_SOIL_CLASSIFICATION, history.soil.substringAfter('-'))
                     putExtra(HistoryActivity.KEY_TEMPERATURE, history.temp)
                     putExtra(HistoryActivity.KEY_HUMIDITY, history.humidity)
                     putExtra(HistoryActivity.KEY_RAIN, history.rain)
