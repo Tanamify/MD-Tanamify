@@ -163,7 +163,7 @@ class ResultActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveResultToHistory(result: String, temperature: Float, humidity: Float, rain: Float, sun: Float, recommendation: String, uri: String) {
-        val currentTime = ZonedDateTime.now(ZoneId.of("Asia/Jakarta")).format(DateTimeFormatter.ISO_INSTANT)
+        val currentTime = ZonedDateTime.now(ZoneId.of("Asia/Jakarta")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
         val fileName = extractFileName(uri)
         Log.d("ResultActivity", "Saving Image File Name: $fileName")

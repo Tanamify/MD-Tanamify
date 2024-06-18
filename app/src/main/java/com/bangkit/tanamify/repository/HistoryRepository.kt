@@ -5,7 +5,6 @@ import com.bangkit.tanamify.data.api.ApiService
 import com.bangkit.tanamify.data.pref.UserModel
 import com.bangkit.tanamify.data.pref.UserPreference
 import com.bangkit.tanamify.data.retrofit.response.HistoryResponse
-import com.bangkit.tanamify.data.retrofit.response.PredictionsResponse
 import com.bangkit.tanamify.data.retrofit.response.LoginResponse
 import com.bangkit.tanamify.data.retrofit.request.LoginRequest
 import com.bangkit.tanamify.data.retrofit.request.RegisterRequest

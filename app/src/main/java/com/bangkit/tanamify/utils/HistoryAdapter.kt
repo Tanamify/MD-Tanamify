@@ -2,14 +2,21 @@ package com.bangkit.tanamify.utils
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.text.format.DateUtils.formatDateTime
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.tanamify.data.retrofit.response.HistoryResponse
 import com.bangkit.tanamify.databinding.HistoryCardBinding
 import com.bangkit.tanamify.ui.history.HistoryActivity
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class HistoryAdapter(
     private val deleteHistory: (String) -> Unit
@@ -20,6 +27,7 @@ class HistoryAdapter(
         return MyViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val history = getItem(position)
         holder.bind(history, deleteHistory)
@@ -28,13 +36,14 @@ class HistoryAdapter(
     class MyViewHolder(val binding: HistoryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(history: HistoryResponse, deleteHistory: (String) -> Unit) {
             val imagePath = "file:///data/user/0/com.bangkit.tanamify/cache/" + history.image
             val imageUri = Uri.parse(imagePath)
             binding.resultImage.setImageURI(imageUri)
             binding.textViewLabel.text = history.soil.substringAfter('-')
             binding.textRecommendation.text = history.result
-            binding.textViewTime.text = history.createdAt
+            binding.textViewTime.text = formatDateTime(history.createdAt)
 
             binding.root.setOnClickListener {
                 val context = binding.root.context
@@ -53,6 +62,15 @@ class HistoryAdapter(
             binding.btnDelete.setOnClickListener {
                 deleteHistory(history.idpred)
             }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        private fun formatDateTime(dateTime: String): String {
+            val inputFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
+            val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            val parsedDateTime = ZonedDateTime.parse(dateTime, inputFormatter)
+            val jakartaTime = parsedDateTime.withZoneSameInstant(ZoneId.of("Asia/Jakarta"))
+            return jakartaTime.format(outputFormatter)
         }
     }
 
