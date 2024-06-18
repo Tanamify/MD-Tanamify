@@ -2,13 +2,13 @@ package com.bangkit.tanamify.repository
 
 import android.app.Application
 import com.bangkit.tanamify.data.api.ApiService
-import com.bangkit.tanamify.data.local.HistoryEntity
-import com.bangkit.tanamify.data.local.TanamifyDatabase
 import com.bangkit.tanamify.data.pref.UserModel
 import com.bangkit.tanamify.data.pref.UserPreference
-import com.bangkit.tanamify.data.retrofit.response.LoginRequest
+import com.bangkit.tanamify.data.retrofit.response.HistoryResponse
+import com.bangkit.tanamify.data.retrofit.response.PredictionsResponse
 import com.bangkit.tanamify.data.retrofit.response.LoginResponse
-import com.bangkit.tanamify.data.retrofit.response.RegisterRequest
+import com.bangkit.tanamify.data.retrofit.request.LoginRequest
+import com.bangkit.tanamify.data.retrofit.request.RegisterRequest
 import com.bangkit.tanamify.data.retrofit.response.RegisterResponse
 import com.bangkit.tanamify.data.state.ResultState
 import kotlinx.coroutines.Dispatchers
@@ -21,13 +21,17 @@ class HistoryRepository(
     private var apiService: ApiService,
     application: Application
 ) {
-    private val historyDao = TanamifyDatabase.getDatabase(application).historyDao()
 
-    suspend fun addHistory(historyEntity: HistoryEntity) {
-        historyDao.addHistory(historyEntity)
+    suspend fun fetchHistoryFromServer(token: String, userId: String): List<HistoryResponse> {
+        val response = apiService.getHistories("Bearer $token", userId)
+        return response.predictions
     }
 
-    fun getHistory(): List<HistoryEntity> = historyDao.getHistory()
+    suspend fun deleteHistoryFromServer(token: String, idpred: String): Boolean {
+        val response = apiService.deleteHistory("Bearer $token", idpred)
+        return response.isSuccessful
+    }
+
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
@@ -56,7 +60,6 @@ class HistoryRepository(
         }
     }.flowOn(Dispatchers.IO)
 
-
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()
     }
@@ -67,10 +70,6 @@ class HistoryRepository(
 
     fun updateApiService(apiService: ApiService) {
         this.apiService = apiService
-    }
-
-    suspend fun deleteHistory(historyEntity: HistoryEntity) {
-        historyDao.deleteHistory(historyEntity)
     }
 
     companion object {
@@ -91,3 +90,5 @@ class HistoryRepository(
             }
     }
 }
+
+

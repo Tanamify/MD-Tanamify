@@ -1,8 +1,10 @@
 package com.bangkit.tanamify.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -69,6 +71,9 @@ class LoginActivity : AppCompatActivity() {
         when (result) {
             is ResultState.Success -> {
                 val token = result.data.token
+                val userId = result.data.userId
+                Log.d("LoginActivity", "Received Token: $token")
+                saveTokenToSharedPreferences(token, userId)
                 val userModel = UserModel(email, token, isLogin = true)
                 val userRepository = Injection.provideRepository(applicationContext)
                 userRepository.updateApiService(ApiConfig.getApiService(token))
@@ -78,14 +83,19 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-
             is ResultState.Error -> {
                 ToastUtils.showToast(this, "Login Gagal: ${result.error}")
             }
-
-            is ResultState.Loading -> {
-            }
-
+            is ResultState.Loading -> {}
+            else -> {}
         }
     }
+
+    private fun saveTokenToSharedPreferences(token: String, userId: String) {
+        val sharedPreferences = getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString("USER_TOKEN", token).apply()
+        sharedPreferences.edit().putString("USER_ID", userId).apply()
+        Log.d("LoginActivity", "Token and UserId Saved: $token, $userId")
+    }
+
 }

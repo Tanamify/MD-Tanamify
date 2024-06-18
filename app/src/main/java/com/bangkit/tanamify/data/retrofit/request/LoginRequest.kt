@@ -1,4 +1,4 @@
-package com.bangkit.tanamify.data.retrofit.response
+package com.bangkit.tanamify.data.retrofit.request
 
 data class LoginRequest(
     val email: String,

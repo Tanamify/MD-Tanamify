@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bangkit.tanamify.data.local.HistoryEntity
+import com.bangkit.tanamify.data.retrofit.response.HistoryResponse
 import com.bangkit.tanamify.databinding.HistoryCardBinding
-import com.bangkit.tanamify.ui.result.ResultActivity
+import com.bangkit.tanamify.ui.history.HistoryActivity
 
-
-class HistoryAdapter(private val onDeleteClickListener: (HistoryEntity) -> Unit) :
-    ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter(
+    private val deleteHistory: (String) -> Unit
+) : ListAdapter<HistoryResponse, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = HistoryCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,51 +22,47 @@ class HistoryAdapter(private val onDeleteClickListener: (HistoryEntity) -> Unit)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val history = getItem(position)
-        holder.bind(history)
-
-        holder.binding.btnDelete.setOnClickListener {
-            onDeleteClickListener(history)
-        }
+        holder.bind(history, deleteHistory)
     }
 
     class MyViewHolder(val binding: HistoryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(history: HistoryEntity) {
-            val imageUri = Uri.parse(history.uri)
+        fun bind(history: HistoryResponse, deleteHistory: (String) -> Unit) {
+            val imagePath = "file:///data/user/0/com.bangkit.tanamify/cache/" + history.image
+            val imageUri = Uri.parse(imagePath)
             binding.resultImage.setImageURI(imageUri)
-            binding.textViewLabel.text = history.result
-            binding.textRecommendation.text = history.recommendation
-            binding.textViewTime.text = history.date
+            binding.textViewLabel.text = history.soil
+            binding.textRecommendation.text = history.result
+            binding.textViewTime.text = history.createdAt
 
             binding.root.setOnClickListener {
                 val context = binding.root.context
-                val intent = Intent(context, ResultActivity::class.java).apply {
-                    putExtra(ResultActivity.EXTRA_IMAGE_URI, history.uri)
-                    putExtra(ResultActivity.EXTRA_SOIL_CLASSIFICATION, history.result)
-                    putExtra(ResultActivity.KEY_TEMPERATURE, history.temperature)
-                    putExtra(ResultActivity.KEY_HUMIDITY, history.humidity)
-                    putExtra(ResultActivity.KEY_RAIN, history.rain)
-                    putExtra(ResultActivity.KEY_SUN, history.sun)
-                    putExtra(ResultActivity.KEY_RECOMMENDATION, history.recommendation)
-
+                val intent = Intent(context, HistoryActivity::class.java).apply {
+                    putExtra(HistoryActivity.EXTRA_IMAGE_URI, imagePath)
+                    putExtra(HistoryActivity.EXTRA_SOIL_CLASSIFICATION, history.soil)
+                    putExtra(HistoryActivity.KEY_TEMPERATURE, history.temp)
+                    putExtra(HistoryActivity.KEY_HUMIDITY, history.humidity)
+                    putExtra(HistoryActivity.KEY_RAIN, history.rain)
+                    putExtra(HistoryActivity.KEY_SUN, history.sun)
+                    putExtra(HistoryActivity.KEY_RECOMMENDATION, history.result)
                 }
                 context.startActivity(intent)
+            }
+
+            binding.btnDelete.setOnClickListener {
+                deleteHistory(history.idpred)
             }
         }
     }
 
-
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryEntity>() {
-            override fun areItemsTheSame(oldItem: HistoryEntity, newItem: HistoryEntity): Boolean {
-                return oldItem == newItem
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryResponse>() {
+            override fun areItemsTheSame(oldItem: HistoryResponse, newItem: HistoryResponse): Boolean {
+                return oldItem.idpred == newItem.idpred
             }
 
-            override fun areContentsTheSame(
-                oldItem: HistoryEntity,
-                newItem: HistoryEntity
-            ): Boolean {
+            override fun areContentsTheSame(oldItem: HistoryResponse, newItem: HistoryResponse): Boolean {
                 return oldItem == newItem
             }
         }
