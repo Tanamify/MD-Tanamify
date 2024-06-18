@@ -184,8 +184,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun convertSoilClassificationToFloat(soilClassification: String?): Float {
-        Log.d("ResultActivity", "Convert Soil Classification: $soilClassification")
-        return when (soilClassification) {
+        return when (soilClassification?.trim()) {
             "01-Aluvial" -> 1f
             "02-Andosol" -> 2f
             "03-Entisol" -> 3f
@@ -194,7 +193,10 @@ class ResultActivity : AppCompatActivity() {
             "06-Laterit" -> 6f
             "07-Kapur" -> 7f
             "08-Pasir" -> 8f
-            else -> 3f
+            else -> {
+                Log.e("ResultActivity", "Unknown soil classification: $soilClassification")
+                0f
+            }
         }
     }
 
