@@ -36,15 +36,15 @@ At Tanamify, we are committed to addressing these challenges with a holistic app
 
 ## Team Behind Tanamify
 
-Mobile Development Team <br />
+📱 Mobile Development Team <br />
 - [ ] A119D4KY4094 – Yondika Vio Landa – Institut Teknologi Sumatera
 - [ ] A338D4KY4234 – Muhammad Iqbal Fadhillah – Politeknik Negeri Semarang
 
-Cloud Computing Team <br />
+☁️ Cloud Computing Team <br />
 - [ ] C200D4KY0347 – Derva Anargya Ghaly – Universitas Diponegoro
 - [ ] C200D4KY0885 – Erlan Irhab Ghalib – Universitas Diponegoro
 
-Machine Learning Team <br />
+🧠 Machine Learning Team <br />
 - [ ] M200D4KY1957 – Rizky Akhmad Fahreza – Universitas Diponegoro
 - [ ] M248D4KX2597 – Dina Merlia Efendi – Universitas Lampung
 - [ ] M308D4KX1815 – Nasywa Anindya Putri – Universitas Riau
