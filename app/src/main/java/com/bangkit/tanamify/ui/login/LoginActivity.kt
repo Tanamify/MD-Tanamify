@@ -32,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         val viewModelFactory = ViewModelFactory.getInstance(this)
         loginViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
