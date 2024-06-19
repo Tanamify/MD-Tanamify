@@ -37,7 +37,7 @@ class HistoryAdapter(
         holder.bind(history, deleteHistory)
     }
 
-    class MyViewHolder(private val binding: HistoryCardBinding) :
+    class MyViewHolder(val binding: HistoryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @RequiresApi(Build.VERSION_CODES.O)
