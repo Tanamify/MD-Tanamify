@@ -34,6 +34,54 @@ At Tanamify, we are committed to addressing these challenges with a holistic app
 - [ ] Express.js: Backend System APIs, and Deployment
 - [ ] Google Cloud Platform
 
+## How to Run Project
+
+### 0. System Requirements
+
+- [Android Studio](https://developer.android.com/studio)
+- [Git](https://git-scm.com/)
+  
+### 1. Clone the Repository
+
+1. Open Terminal or Command Prompt:
+
+   - On Windows: Open Command Prompt or Git Bash.
+   - On Mac/Linux: Open Terminal.
+
+2. Clone the repository using the following command:
+
+   ```bash
+   git clone https://github.com/Tanamify/MD-Tanamify.git
+   ```
+
+3. Navigate to the project directory:
+   ```bash
+   cd Tanamify-Mobile-App
+   ```
+### 2. Open the Project in Android Studio
+1. Open Android Studio:
+   - Launch Android Studio from the Start Menu (Windows) or Applications folder (Mac).
+
+2. Open the Project:
+   - In Android Studio, select "Open an existing project".
+   - Navigate to the directory where you cloned the repository and select the project directory.
+
+### 3. Configure the Project
+1. Sync Gradle:
+   - Once the project is opened in Android Studio, it will usually automatically sync with Gradle. If not,       you can manually trigger a sync by selecting "Sync Project with Gradle Files" from the toolbar.
+
+2. Select Emulator or Physical Device:
+   - If using an emulator, ensure you have configured an Android emulator in the AVD Manager (Android            Virtual Device Manager).
+   - If using a physical device, ensure the device is in developer mode and USB debugging is enabled.            Connect the device to your computer via USB cable.
+
+### 4. Run the Application:
+1. Click the "Run" button (green triangle icon) in the Android Studio toolbar.
+2. Select a device (emulator or physical device) from the list of available devices.
+   
+### 5. Troubleshooting:
+1. If there are issues with Gradle sync or other errors, check the logs in the "Build" or "Logcat" section for more details.
+2. Ensure all project dependencies are downloaded and there are no configuration errors.
+
 ## Team Behind Tanamify
 
 📱 Mobile Development Team <br />
